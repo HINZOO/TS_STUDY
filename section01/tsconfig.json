@@ -1,0 +1,10 @@
+{
+  "compilerOptions": { 
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "dist",//컴파일된 자바스크립트 파일의 위치지정.
+    "strict": true,
+    "moduleDetection": "force"
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,77 @@
+📁 [타입스크립트 작동원리]
+타입스크립트 코드 -> 컴파일(AST;추상구문트리 로 전환 후 >> 타입검사 ) -> JS코드
+JS코드 -> 컴파일(AST;추상구문트리로 전환 후 ) -> 바이트코드 ->> 컴퓨터로 실행
+
+
+
+📁 [개발환경설정]
+1. npm 초기화 
+모두 default값으로 엔터쳐서 넘기기
+C:\Users\m_okk\DEV\TS_STUDY\section01> npm init
+
+2. type을 알아볼수 있도록 types/node 설치
+This package contains type definitions for node
+C:\Users\m_okk\DEV\TS_STUDY\section01> npm i @types/node 
+
+3. 타입스크립트 컴파일러 설치
+C:\Users\m_okk\DEV\TS_STUDY\section01> npm install typescript -g
+-g로 설치하여 모든 컴퓨터에서 패키지 사용할수있도록 함.
+(* MAC  은 sudo를 붙이고 win설치가 안되면 관리자권한으로 터미널을 열어서 실행)
+tsc -v 로 버전확인
+
+
+4.src 폴더 생성후 
+index.ts에 코드를 작성하고
+tsc src/index.ts 를 터미널에 입력하면 
+타입스크립트 컴파일러가 컴파일한 js 코드가 나옴.
+node src/index.js 를 통해 js코드를 실행시킨다.
+
+
+🍊 ts node 설치
+한번에 ts컴파일부터 js실행까지 진행
+설치 cmd : npm install ts-node -g
+           npm i -g tsx (node 20버젼이상)
+명령 cmd : ts-node src/index.ts
+           tsx src/index.ts
+
+📁 [TS 컴파일러 옵션 설정하기]
+명령 cmd :  tsc --init //ts 옵션 초기화
+tsconfig.json 파일 생성 (여기서 옵션설정)
+ 1) "include": ["src"] // src라는 범위안에 있는 모든 파일을 컴파일해라.
+ 2) "compilerOptions": { 🐸>> 표시된 설정들이 이 안에 포함됨.! }
+  >> "target": "ES5",// js 옵션 설정 ES5 버젼의  js를 쓰겠다.
+    ex) const func = () => console.log("Hello"); ES6에 있는 화살표 함수를 컴파일해보면
+        [결과]
+        var func = function () { return console.log("Hello"); }; ES5 버젼으로 컴파일됨.
+    ESNext; js 최신버젼을 의미.
+
+  >> "module": "CommonJS" //js 모듈 지정
+
+  🤔 자바스크립트 모듈 2가지 (COMMONJS / ES모듈시스템)
+    * COMMON JS ex)
+        const a= requre(...)
+        module.exports
+    * ES 모듈
+      import a from '...';
+      export default ...;
+    
+  >> "outDir": "dist"//컴파일된 자바스크립트 파일의 위치지정.
+  >> "strict": true //엄격한 검사 실행 추론이 되지않는 타입을 모르면 오류생성
+              //js -> ts 로 마이그레이션할때는 주로 끄고, 
+              //타입스크립트로 개발을 할때는 true로 켜둔다.
+
+  >> "moduleDetection": "force"
+    다른 파일에 동일한 변수를 적으면 동일한 변수를 사용했다는 오류를 발생=> ts는 기본적으로 모든파일을 전역 모듈로 생각하기 때문이다.
+    이를 해결하기위해 방법
+      a) ts파일 내에  export{}; 를 강제적으로 작성해서 모듈시스템으로 작성하면 독립된 모듈로 바라봄.
+                       
+      b) ts설정에서  "moduleDetection": "force" 옵션을 부여
+          -컴파일 해보면  export{}; 가 들어가있음을 확인할 수 있다.
+
+3) ts-node를 사용하는경우 ts 컴파일러가 이를 인식하지 못하기 때문에 config 설정을 해줘야 함.
+   "ts-node": {
+     "esm": true
+   },
+   * tsx는 별도 설정이 필요하지 않음.
+
+
