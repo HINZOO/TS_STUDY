@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "dist",
+    "strict": true, //strictNullChecks 의 상위옵션 true이면 하위인 strictNullChecks도 false가 됨.
+    // "strictNullChecks": false,
+    "moduleDetection": "force"
+  },
+  "include": ["src"]
+}
